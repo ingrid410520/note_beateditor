@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:note_beateditor/Data/Datamanager.dart';
+import 'package:note_beateditor/Function/Function_OpneNote.dart';
 
 void main() {
   runApp(const MyApp());
@@ -59,7 +60,9 @@ class _MyHomeState extends State<MyHome> {
                       OutlinedButton.icon(
                         icon: Icon(Icons.folder_open),
                         label: Text("Open"),
-                        onPressed: () {},
+                        onPressed: () {
+                          getFile();
+                        },
                       ),
                       OutlinedButton.icon(
                         icon: Icon(Icons.file_present),
