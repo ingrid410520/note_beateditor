@@ -1,23 +1,20 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:note_beateditor/Values/AppValues.dart';
 
 import 'Data/Datamanager.dart';
-import 'main.dart';
 
-class Build_BODY extends StatefulWidget {
+class Build_BODY extends StatelessWidget {
   const Build_BODY({
     super.key,
     required this.appValues,
+    required this.context,
   });
 
   final AppValues appValues;
+  final BuildContext context;
 
-  @override
-  State<Build_BODY> createState() => _Build_BODYState();
-}
-
-class _Build_BODYState extends State<Build_BODY> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -32,9 +29,9 @@ class _Build_BODYState extends State<Build_BODY> {
                   Datamanager().Util.Screen(context).height.toString()),
               GridView.builder(
                 shrinkWrap: true,
-                itemCount: int.parse(widget.appValues.NoteLength.text),
+                itemCount: int.parse(appValues.textedit_NoteLength.text),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: int.parse(widget.appValues.GridRow.text),
+                    crossAxisCount: int.parse(appValues.textedit_GridRow.text),
                     childAspectRatio: 0.5,
                     crossAxisSpacing: 1,
                     mainAxisSpacing: 10),

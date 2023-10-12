@@ -1,59 +1,81 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:note_beateditor/main.dart';
+import 'package:note_beateditor/Data/Datamanager.dart';
+import 'package:note_beateditor/Function/Function_OpneNote.dart';
+import 'package:note_beateditor/Values/AppValues.dart';
 
-import 'Data/Datamanager.dart';
-import 'Function/Function_OpneNote.dart';
-
-class Build_HEADER extends StatefulWidget implements PreferredSizeWidget {
-  Build_HEADER({
-    super.key,
-    required this.appValues,
-  });
+class Build_AppBar extends StatefulWidget implements PreferredSizeWidget {
+  const Build_AppBar(
+      {super.key, required this.appValues, required this.context});
 
   final AppValues appValues;
-
+  final BuildContext context;
   @override
-  State<Build_HEADER> createState() => _Build_HEADERState();
-
+  Size get preferredSize {
+    return Size.fromHeight(120);
+  }
   @override
-  Size get preferredSize => const Size.fromHeight(120);
+  State<Build_AppBar> createState() => _Build_AppBarState();
 }
 
-class _Build_HEADERState extends State<Build_HEADER> {
+class _Build_AppBarState extends State<Build_AppBar> {
+  @override
+  Size get preferredSize {
+    return Size.fromHeight(120);
+  }
+
+  @override
+  void initState()
+  {
+    super.initState();
+
+  }
+
   @override
   Widget build(BuildContext context) {
+    TextEditingController _Row = widget.appValues.textedit_GridRow;
+    TextEditingController _Sep = widget.appValues.textedit_NoteSeperated;
+    TextEditingController _Length = widget.appValues.textedit_NoteLength;
     return AppBar(
         backgroundColor: Datamanager().Color.Appbar_Background,
         title: Text(Datamanager().AppName),
         toolbarHeight: 80,
         actions: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Container(
-                  width: Datamanager().Util.Screen(context).width * 0.3,
-                  child: AutoSizeText("Note name // ",
-                      minFontSize: 15, maxFontSize: 20)),
-              OutlinedButton.icon(
-                icon: Icon(Icons.folder_open),
-                label: Text("Open"),
-                onPressed: () {
-                  getFile();
-                },
-              ),
-              OutlinedButton.icon(
-                icon: Icon(Icons.file_present),
-                label: Text("New"),
-                onPressed: () {},
-              ),
-              OutlinedButton.icon(
-                icon: Icon(Icons.save),
-                label: Text("Save"),
-                onPressed: () {},
-              ),
-            ],
+          Container(
+            //color: Colors.white,
+            width: Datamanager().Util.Screen(context).width * 0.4,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    OutlinedButton.icon(
+                      icon: Icon(Icons.folder_open),
+                      label: Text("Open"),
+                      onPressed: () {
+                        getFile();
+                      },
+                    ),
+                    OutlinedButton.icon(
+                      icon: Icon(Icons.file_present),
+                      label: Text("New"),
+                      onPressed: () {},
+                    ),
+                    OutlinedButton.icon(
+                      icon: Icon(Icons.save),
+                      label: Text("Save"),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+                Container(
+                    width: Datamanager().Util.Screen(context).width * 0.3,
+                    child: AutoSizeText("Note name // ",
+                        minFontSize: 15, maxFontSize: 20)),
+              ],
+            ),
           ),
         ],
         bottom: Tab(
@@ -68,7 +90,7 @@ class _Build_HEADERState extends State<Build_HEADER> {
               Container(
                   width: Datamanager().Util.Screen(context).width * 0.1,
                   child: TextField(
-                    controller: widget.appValues.GridRow,
+                    controller: _Row,
                     maxLines: 1,
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -81,7 +103,7 @@ class _Build_HEADERState extends State<Build_HEADER> {
               Container(
                   width: Datamanager().Util.Screen(context).width * 0.1,
                   child: TextField(
-                    controller: widget.appValues.NoteSeperated,
+                    controller: _Sep,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     maxLines: 1,
                     decoration: InputDecoration(
@@ -93,7 +115,7 @@ class _Build_HEADERState extends State<Build_HEADER> {
               Container(
                   width: Datamanager().Util.Screen(context).width * 0.1,
                   child: TextField(
-                    controller: widget.appValues.NoteLength,
+                    controller: _Length,
                     maxLines: 1,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     decoration: InputDecoration(
@@ -106,10 +128,11 @@ class _Build_HEADERState extends State<Build_HEADER> {
                 child: Text("Apply"),
                 onPressed: () {
                   setState(() {
-                    print("Header : "+widget.appValues.NoteLength.text );
-                    widget.appValues.listNote = List.filled(
-                        int.parse(widget.appValues.NoteLength.text), "sep");
+                    widget.appValues.textedit_GridRow.text = _Row.text;
+                    widget.appValues.textedit_NoteSeperated = _Sep;
+                    widget.appValues.textedit_NoteLength = _Length;
                   });
+                  //appValues.list_Note = List.filled(int.parse(appValues.textedit_NoteLength.text), "sea");
                 },
               ),
             ],
