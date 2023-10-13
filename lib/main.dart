@@ -5,7 +5,7 @@ import 'package:note_beateditor/Build_AppBar.dart';
 import 'package:note_beateditor/Build_BODY.dart';
 import 'package:note_beateditor/Data/Datamanager.dart';
 import 'package:note_beateditor/Function/Function_OpneNote.dart';
-import 'package:note_beateditor/Values/AppValues.dart';
+import 'package:note_beateditor/Data/AppValues.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,11 +39,17 @@ class MyHome extends StatefulWidget {
 class _MyHomeState extends State<MyHome> {
   AppValues appValues = AppValues();
 
+  update() {
+    setState(() {
+      print("Update");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       //appBar: build_Header(context),
-      appBar: Build_AppBar(appValues: appValues, context: context),
+      appBar: Build_AppBar(appValues: appValues, update: update),
       body: Build_BODY(appValues: appValues, context: context),
       bottomNavigationBar: build_Bottom(context),
     );
@@ -59,7 +65,7 @@ class _MyHomeState extends State<MyHome> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text("Note Count : "+appValues.textedit_NoteLength.text),
+                  Text("Note Count : " + appValues.NoteLength.toString()),
                   ElevatedButton(
                     child: Text("Add Script"),
                     onPressed: () {},
@@ -75,119 +81,30 @@ class _MyHomeState extends State<MyHome> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    child: Text("Temp1"),
-                    onPressed: () {},
+                    child: Text("reset"),
+                    onPressed: () {
+                      setState(() {
+                        appValues.PlaySpeed = appValues.PlaySpeed_Default;
+                      });
+                    },
                   ),
-                  ElevatedButton(
-                    child: Text("Temp2"),
-                    onPressed: () {},
+                  Slider.adaptive(
+                    value: appValues.PlaySpeed,
+                    min: appValues.PlaySpeed_Min,
+                    max: appValues.PlaySpeed_Max,
+                    divisions: 4,
+                    label: appValues.PlaySpeed.toString(),
+                    onChanged: (value) {
+                      setState(() {
+                        appValues.PlaySpeed = value;
+                      });
+                    },
                   ),
                 ],
               ),
             ],
           ),
         ));
-  }
-
-
-  AppBar build_Header(BuildContext context) {
-    return AppBar(
-        backgroundColor: Datamanager().Color.Appbar_Background,
-        title: Text(Datamanager().AppName),
-        toolbarHeight: 80,
-        actions: [
-          Container(
-            //color: Colors.white,
-            width: Datamanager().Util.Screen(context).width * 0.4,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    OutlinedButton.icon(
-                      icon: Icon(Icons.folder_open),
-                      label: Text("Open"),
-                      onPressed: () {
-                        getFile();
-                      },
-                    ),
-                    OutlinedButton.icon(
-                      icon: Icon(Icons.file_present),
-                      label: Text("New"),
-                      onPressed: () {},
-                    ),
-                    OutlinedButton.icon(
-                      icon: Icon(Icons.save),
-                      label: Text("Save"),
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-                Container(
-                    width: Datamanager().Util.Screen(context).width * 0.3,
-                    child: AutoSizeText("Note name // ", minFontSize: 15, maxFontSize: 20)),
-              ],
-            ),
-          ),
-        ],
-        bottom: Tab(
-            child: Container(
-          width: Datamanager().Util.Screen(context).width,
-          height: Datamanager().Util.Screen(context).height * 0.1,
-          color: Datamanager().Color.CommandBar_Background,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              AutoSizeText("Note Config"),
-              Container(
-                  width: Datamanager().Util.Screen(context).width * 0.1,
-                  child: TextField(
-                    controller: appValues.textedit_GridRow,
-                    maxLines: 1,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    decoration: InputDecoration(
-                        label: Text("Row"),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(3),
-                        )),
-                  )),
-              Container(
-                  width: Datamanager().Util.Screen(context).width * 0.1,
-                  child: TextField(
-                    controller: appValues.textedit_NoteSeperated,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    maxLines: 1,
-                    decoration: InputDecoration(
-                        label: Text("Seperated"),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(3),
-                        )),
-                  )),
-              Container(
-                  width: Datamanager().Util.Screen(context).width * 0.1,
-                  child: TextField(
-                    controller: appValues.textedit_NoteLength,
-                    maxLines: 1,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    decoration: InputDecoration(
-                        label: Text("Length"),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(3),
-                        )),
-                  )),
-              ElevatedButton(
-                child: Text("Apply"),
-                onPressed: () {
-                  setState(() {
-                    appValues.list_Note = List.filled(int.parse(appValues.textedit_NoteLength.text), "sea");
-                  });
-                },
-              ),
-            ],
-          ),
-        )));
   }
 
   Container build_UI_Noteplay(BuildContext context) {

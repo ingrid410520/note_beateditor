@@ -3,40 +3,51 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:note_beateditor/Data/Datamanager.dart';
 import 'package:note_beateditor/Function/Function_OpneNote.dart';
-import 'package:note_beateditor/Values/AppValues.dart';
+import 'package:note_beateditor/Data/AppValues.dart';
 
 class Build_AppBar extends StatefulWidget implements PreferredSizeWidget {
-  const Build_AppBar(
-      {super.key, required this.appValues, required this.context});
+  Build_AppBar(
+      {super.key, required this.appValues, this.update});
 
   final AppValues appValues;
-  final BuildContext context;
+  late Function? update ;
+
   @override
-  Size get preferredSize {
-    return Size.fromHeight(120);
-  }
+  Size get preferredSize => _Build_AppBarState().preferredSize;
+
   @override
   State<Build_AppBar> createState() => _Build_AppBarState();
 }
 
 class _Build_AppBarState extends State<Build_AppBar> {
+
+  final TextEditingController _Row = TextEditingController();
+  final TextEditingController _Sep = TextEditingController();
+  final TextEditingController _Length = TextEditingController();
+
+  @override
+  initState()
+  {
+    super.initState();
+
+    _Row.text = widget.appValues.Grid_Row.toString();
+    _Sep.text = widget.appValues.NoteSepreated.toString();
+    _Length.text = widget.appValues.NoteLength.toString();
+  }
+
+  callback() {
+    setState(() {
+      widget.update!();
+    });
+  }
+
   @override
   Size get preferredSize {
     return Size.fromHeight(120);
   }
 
   @override
-  void initState()
-  {
-    super.initState();
-
-  }
-
-  @override
   Widget build(BuildContext context) {
-    TextEditingController _Row = widget.appValues.textedit_GridRow;
-    TextEditingController _Sep = widget.appValues.textedit_NoteSeperated;
-    TextEditingController _Length = widget.appValues.textedit_NoteLength;
     return AppBar(
         backgroundColor: Datamanager().Color.Appbar_Background,
         title: Text(Datamanager().AppName),
@@ -128,9 +139,11 @@ class _Build_AppBarState extends State<Build_AppBar> {
                 child: Text("Apply"),
                 onPressed: () {
                   setState(() {
-                    widget.appValues.textedit_GridRow.text = _Row.text;
-                    widget.appValues.textedit_NoteSeperated = _Sep;
-                    widget.appValues.textedit_NoteLength = _Length;
+                    callback();
+                    widget.appValues.Grid_Row = int.parse(_Row.text) ;
+                    widget.appValues.NoteSepreated = int.parse(_Sep.text);
+                    widget.appValues.NoteLength = int.parse(_Length.text);
+                    print("Appbar : " + widget.appValues.Grid_Row.toString());
                   });
                   //appValues.list_Note = List.filled(int.parse(appValues.textedit_NoteLength.text), "sea");
                 },
