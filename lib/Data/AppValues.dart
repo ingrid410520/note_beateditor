@@ -3,6 +3,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
+import 'package:note_beateditor/Data/Note.dart';
 
 class AppValues extends StatefulWidget {
   AppValues({super.key});
@@ -10,6 +11,7 @@ class AppValues extends StatefulWidget {
   int Grid_Row = 15;
   int NoteSepreated = 1;
   int NoteLength = 50;
+  NScript SelectScript = NScript.none;
 
   double PlaySpeed = 1.0;
   double PlaySpeed_Default = 1.0;

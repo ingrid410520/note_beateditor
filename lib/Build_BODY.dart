@@ -8,11 +8,9 @@ class Build_BODY extends StatefulWidget {
   const Build_BODY({
     super.key,
     required this.appValues,
-    required this.context,
   });
 
   final AppValues appValues;
-  final BuildContext context;
 
   @override
   State<Build_BODY> createState() => _Build_BODYState();
@@ -53,26 +51,22 @@ class _Build_BODYState extends State<Build_BODY> {
       shrinkWrap: true,
       itemCount: iLength,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: iRow,
-          childAspectRatio: iSep.toDouble(),
-          crossAxisSpacing: 5,
-          mainAxisSpacing: 50),
+          crossAxisCount: iRow, childAspectRatio: iSep.toDouble()*0.5, crossAxisSpacing: 5, mainAxisSpacing: 15),
       itemBuilder: (context, sec_index) {
         //setState(() {});
         return GridView.builder(
           itemCount: iSep,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: iSep,
-              //childAspectRatio: 0.5,
+              childAspectRatio: 0.5,
               crossAxisSpacing: 0,
               mainAxisSpacing: 10),
           itemBuilder: (context, sep_index) {
-            int index1 = sec_index+1;
-            int index2 = sep_index+1;
+            int index1 = sec_index + 1;
+            int index2 = sep_index + 1;
             return GridTile(
                 child: OutlinedButton(
-              child: AutoSizeText("Sec $index1 - $index2",
-                  maxLines: 2, maxFontSize: 20),
+              child: AutoSizeText("Sec $index1 - $index2", maxLines: 2, maxFontSize: 20),
               style: OutlinedButton.styleFrom(
                   alignment: Alignment.topCenter,
                   backgroundColor: Datamanager().Color.Note_Background,
