@@ -1,4 +1,8 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:note_beateditor/Data/AppValues.dart';
+
+import 'Datamanager.dart';
 
 enum NScript {
   none,
@@ -19,6 +23,9 @@ class Note extends StatefulWidget {
 
   final int _Sec;
   final int _Sep;
+  bool isPlayed = false;
+  bool hasScript = false;
+
   List<NoteScript>? listScript = List.empty(growable: true);
 
   @override
@@ -26,16 +33,25 @@ class Note extends StatefulWidget {
 }
 
 class _NoteState extends State<Note> {
+  int test = 1;
+
   @override
   Widget build(BuildContext context) {
     int Sec = widget._Sec;
     int Sep = widget._Sep;
 
     return OutlinedButton(
-
-      child: Text("$Sec - $Sep"),
+      child: AutoSizeText("$Sec - $Sep : $test", maxLines: 2),
+      style: OutlinedButton.styleFrom(
+          alignment: Alignment.topCenter,
+          backgroundColor: Datamanager().Color.Note_Background,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          )),
       onPressed: () {
-        setState(() {});
+        setState(() {
+          test+=1;
+        });
       },
     );
   }
@@ -43,6 +59,7 @@ class _NoteState extends State<Note> {
 
 class NoteScript {
   NoteScript({required this.eScriptType, required this.detail});
+
   NScript eScriptType = NScript.none;
   var detail = "None";
 }

@@ -93,7 +93,16 @@ class _Build_AppBarState extends State<Build_AppBar> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              AutoSizeText("Note Config"),
+              AutoSizeText("Note : " + AppValues().list_Note.length.toString()),
+              ElevatedButton.icon(
+                icon: Icon(Icons.cleaning_services_rounded),
+                label: Text("Reset Note"),
+                onPressed: () {
+                  setState(() {
+                    //AppValues().list_Note.clear();
+                  });
+                },
+              ),
               Container(
                   width: Datamanager().Util.Screen(context).width * 0.1,
                   child: TextField(
@@ -139,6 +148,7 @@ class _Build_AppBarState extends State<Build_AppBar> {
                     widget.appValues.Grid_Row = int.parse(_Row.text);
                     widget.appValues.NoteSepreated = int.parse(_Sep.text);
                     widget.appValues.NoteLength = int.parse(_Length.text);
+                    //widget.appValues.list_Note.clear();
                     print("Appbar : " + widget.appValues.Grid_Row.toString());
                   });
                   //appValues.list_Note = List.filled(int.parse(appValues.textedit_NoteLength.text), "sea");

@@ -51,7 +51,7 @@ class _MyHomeState extends State<MyHome> {
     return Scaffold(
       //appBar: build_Header(context),
       appBar: Build_AppBar(appValues: appValues, update: update),
-      body: Build_BODY(appValues: appValues),
+      body: Build_BODY(appValues: appValues,update: update ),
       bottomNavigationBar: Build_Bottom(appValues: appValues, update: update),
       //bottomNavigationBar: build_Bottom(context),
     );
