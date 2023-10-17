@@ -27,8 +27,8 @@ class _Build_AppBarState extends State<Build_AppBar> {
   initState() {
     super.initState();
 
-    _Row.text = widget.appValues.Grid_Row.toString();
-    _Sep.text = widget.appValues.NoteSepreated.toString();
+    _Row.text = widget.appValues.UI_Grid_Row.toString();
+    _Sep.text = widget.appValues.UI_NoteSepreated.toString();
     _Length.text = widget.appValues.NoteLength.toString();
   }
 
@@ -145,11 +145,11 @@ class _Build_AppBarState extends State<Build_AppBar> {
                 onPressed: () {
                   setState(() {
                     callback();
-                    widget.appValues.Grid_Row = int.parse(_Row.text);
-                    widget.appValues.NoteSepreated = int.parse(_Sep.text);
+                    widget.appValues.UI_Grid_Row = int.parse(_Row.text);
+                    widget.appValues.UI_NoteSepreated = int.parse(_Sep.text);
                     widget.appValues.NoteLength = int.parse(_Length.text);
                     //widget.appValues.list_Note.clear();
-                    print("Appbar : " + widget.appValues.Grid_Row.toString());
+                    print("Appbar : " + widget.appValues.UI_Grid_Row.toString());
                   });
                   //appValues.list_Note = List.filled(int.parse(appValues.textedit_NoteLength.text), "sea");
                 },

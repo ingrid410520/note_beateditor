@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:note_beateditor/Data/AppValues.dart';
 
 import 'Data/Datamanager.dart';
+import 'Note/Enum_Script.dart';
 
 class Build_Bottom extends StatefulWidget {
   const Build_Bottom({super.key, required this.appValues, required this.update});
@@ -15,9 +16,6 @@ class Build_Bottom extends StatefulWidget {
 }
 
 class _Build_BottomState extends State<Build_Bottom> {
-  List<String> menu = ['Exam1', 'Exam2', 'Exam3'];
-  String select = 'Exam1';
-
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
@@ -100,14 +98,16 @@ class _Build_BottomState extends State<Build_Bottom> {
   }
 
   Widget buildDropMenu_ScriptType() {
+    String Selected = AppValues().scriptInfo.getScriptTypeString(AppValues().ui_SelectedScript);
     return DropdownButton(
-      value: select,
-      items: menu.map((item) {
-        return DropdownMenuItem(value: item, child: Text("$item"));
-      }).toList(),
+      value: Selected,
+      items: AppValues().scriptInfo.getScriptTypeStringList().map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
       onChanged: (value) {
         setState(() {
-          select = value as String;
+          //print(AppValues().scriptInfo.getScriptTypeStringList());
+          AppValues().ui_SelectedScript = AppValues().scriptInfo.getScriptTypeFromString(value!);
+          Selected = value;
+          print("Selected Script : "+ value + " " + AppValues().ui_SelectedScript.toString());
         });
       },
     );

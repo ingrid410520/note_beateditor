@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:note_beateditor/Data/AppValues.dart';
-import 'package:note_beateditor/Data/Note.dart';
+import 'package:note_beateditor/Note/Note.dart';
 
 import 'Data/Datamanager.dart';
 
@@ -48,8 +48,8 @@ class _Build_BODYState extends State<Build_BODY> {
 
   GridView build_Grid() {
     int iLength = widget.appValues.NoteLength;
-    int iRow = widget.appValues.Grid_Row;
-    int iSep = widget.appValues.NoteSepreated;
+    int iRow = widget.appValues.UI_Grid_Row;
+    int iSep = widget.appValues.UI_NoteSepreated;
     AppValues().list_Note.clear();
     widget.update;
 
